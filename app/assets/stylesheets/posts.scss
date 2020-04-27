@@ -1,0 +1,59 @@
+.jumbotron-extend {
+  position: relative;
+  min-height: 300px;
+  color: #beff15;
+  font-family: 'Playfair Display', serif;
+  background: url(https://cdn.pixabay.com/photo/2017/04/19/13/03/coffee-2242212__480.jpg) center center;
+  background-size: cover;
+  .jumbotron-container {
+    position: relative;
+    .catch-copy {
+      font-size: 30px;
+      position: absolute;
+      right:20px;
+      bottom:-150px;
+    }
+  }
+}
+
+.content-side {
+  width: 100%;
+  .user-profile{
+    .profile-username{
+      text-align: center;
+    }
+  }
+}
+
+
+
+.post-contents {
+  margin-bottom: 65px;
+  .post-content {
+    width: 100%;
+    .content-header {
+      margin-bottom: 20px;
+      .media-body {
+        font-family: "Avenir", serif;
+        .updated {
+          font-size: 15px;
+        }
+      }
+    }
+    .content-main h3 {
+      margin-top: 15px;
+      margin-bottom: 15px;
+      font-size: 25px;
+      font-family: "Playfair Display", serif;
+    }
+    .content-main p {
+      width: 100%;
+      font-size: 20px;
+      color: pink;
+    }
+  }
+}
+
+.nav {
+  background-color: #f3ffd8;
+}
