@@ -7,18 +7,18 @@
       <div class="content-side col-3 p-4">
         <% if user_signed_in? %>
         <div class="user-profile lead p-2">
-          <p class="profile-username">qqqさんのマイページ</p>
+          <p class="profile-username"><%=current_user.name %>さんのマイページ</p>
         </div>
         <div class="profile-img p-4">
-          <img src="https://lh3.googleusercontent.com/proxy/3qkbHE3_mS4Eo01fxjVy3R5dByO5tJt35z-sAnBdaHkTmazlny9nvGEN_9_EO5u0y1ExQHcWRA5XBxziL3qo-Byq6xdi-if4ip6d2dNeUJfJT5xdio6uyUw2" class="img-responsive" style="width:80%" alt="参考画像">
+          <%= image_tag "https://pakutaso.cdn.rabify.me/shared/img/page/ookawa201712.jpg?d=300", class: "img-responsive", style: "width:100%"%>
         </div>
         <div class="profile-text mt-5">
-          <pre>
-      ここに
-      プロフィールを
-      書き込んで
-      表示する
-          </pre>
+          <p>skill:
+          </p>
+          <p>
+          自己紹介
+          こんなことが出来ます。気になった方は気軽にお声がけください！
+          </p>
         </div>
         <% end %>
 
@@ -31,70 +31,30 @@
 
       <div class="post-contents col-6">
         <div class="row">
-
-          <div class="post-content mb-5 p-3">
-            <div class="media content-header">
-              <div class="media-left">
-                <a href="#">
-                  <img src="https://enjoynet.co.jp/icon/icon_menherachan01_05.jpg" alt="avatar" class="media-object" style="width:100px">
-                </a>
+          <% @posts.reverse_each do |post| %>
+            <div class="post-content mb-5 p-3">
+              <div class="media content-header">
+                <div class="media-left">
+                  <a href="#">
+                    <img src="https://enjoynet.co.jp/icon/icon_menherachan01_05.jpg" alt="avatar" class="media-object" style="width:100px">
+                  </a>
+                </div>
+                <div class="media-body mt-3 ml-3">
+                  <h4 class="media-heading"><%= post.user.name %></h4>
+                  <p class="updated"><%= post.created_at %></p>
+                </div>
               </div>
-              <div class="media-body mt-3 ml-3">
-                <h4 class="media-heading">username</h4>
-                <p class="updated">Last Sunday at 11:03 AM </p>
-              </div>
-            </div>
-            <div class="content-main px-4">
-              <h3 class="post-title pl-3">content-title</h3>
-              <p>こんなもの作ってみました！</p>
-              <div class="post-content-image">
-                <img src="https://www.gamespark.jp/imgs/zoom/394518.jpg" alt="photo" class="img-responsive" style="width:100%">
-              </div>
-            </div>
-          </div>
-
-          <div class="post-content mb-5 p-3">
-            <div class="media content-header">
-              <div class="media-left">
-                <a href="#">
-                  <img src="https://enjoynet.co.jp/icon/icon_menherachan01_05.jpg" alt="avatar" class="media-object" style="width:100px">
-                </a>
-              </div>
-              <div class="media-body mt-3 ml-3">
-                <h4 class="media-heading">username</h4>
-                <p class="updated">Last Sunday at 11:03 AM </p>
+              <div class="content-main px-4">
+                <h3 class="post-title pl-3"><%= post.title %></h3>
+                <%= simple_format post.content %>
+                <div class="post-content-image">
+                  <% if post.image.presence %>
+                    <%= image_tag post.image.url, class: "img-responsive", style: "width:100%"%>
+                  <% end%>
+                </div>
               </div>
             </div>
-            <div class="content-main pl-5">
-              <h3>title</h3>
-              <p>こんなもの作ってみました！</p>
-              <div class="post-content-image">
-                <img src="https://img.cinematoday.jp/a/mc4Tgc_84-_r/_size_640x/_v_1584692328/main.jpg" alt="photo" class="img-responsive" style="width:100%">
-              </div>
-            </div>
-          </div>
-
-          <div class="post-content">
-            <div class="media content-header">
-              <div class="media-left">
-                <a href="#">
-                  <img src="https://enjoynet.co.jp/icon/icon_menherachan01_05.jpg" alt="avatar" class="media-object" style="width:100px">
-                </a>
-              </div>
-              <div class="media-body mt-3 ml-3">
-                <h4 class="media-heading">username</h4>
-                <p class="updated">Last Sunday at 11:03 AM </p>
-              </div>
-            </div>
-            <div class="content-main ml-5">
-              <h3>title</h3>
-              <p>こんなもの作ってみました！</p>
-              <div class="post-content-image">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSofpD9tmuFaDsozU5hQ7_wIPi-csCHRv2VqEwbLSUkP1kID4Gm&usqp=CAU" alt="photo" class="img-responsive" style="width:100%">
-              </div>
-            </div>
-          </div>
-
+          <% end %>
         </div>
       </div>
 
@@ -135,6 +95,42 @@
         </form>
       </li>
     </ul>
+  </div>
+
+
+  <div class="modal" id="post" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+
+      <!-- 3.モーダルのコンテンツ -->
+      <div class="modal-content">
+
+          <!-- 4.モーダルのヘッダ -->
+          <div class="modal-header">
+            <h4>あなたの魅力を発信しましょう！</h4>
+          </div>
+
+          <!-- 5.モーダルのボディ -->
+        <%= form_with model: @post, local: true do |form| %>
+          <div class="error-message"></div>
+          <div class="modal-body">
+            <p>何を発信しますか？<br>
+              <%= form.text_field :title, class: "form-control"%>
+              <%= form.text_area :content, class: "form-control rows=3"%>
+            </p>
+            <label class="input-box__image" for="message_image">
+              <p class="img-btn">画像・動画を選択<i class="fa fa-camera fa-fw"></i>
+              <%= form.file_field :image, placeholder: "Image Url" %>
+            </label>
+          </div>
+          
+          <!-- 6.モーダルのフッタ -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+            <%= form.submit '発信!', class:"btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
 
 </body>
