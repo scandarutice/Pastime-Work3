@@ -10,7 +10,7 @@
           <p class="profile-username"><%=current_user.name %>さんのマイページ</p>
         </div>
         <div class="profile-img p-4">
-          <%= image_tag "https://pakutaso.cdn.rabify.me/shared/img/page/ookawa201712.jpg?d=300", class: "img-responsive", style: "width:100%"%>
+          <img src="https://pakutaso.cdn.rabify.me/shared/img/page/ookawa201712.jpg?d=300" alt="avatar" class="media-object" style="width:100px">
         </div>
         <div class="profile-text mt-5">
           <p>skill:
@@ -79,7 +79,9 @@
         <% if user_signed_in? %>
           <a class="nav-link" href="/users/edit">ユーザー情報の編集</a>
         <% else %>
-          <a class="nav-link" href="/users/edit">ユーザー新規登録</a>
+          <%= link_to "新規登録", new_user_registration_path %>
+          or
+          <%= link_to "ログイン", new_user_session_path %>
         <% end %>
       </li>
       <li class="nav-item">
